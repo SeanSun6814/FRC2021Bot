@@ -1,5 +1,7 @@
 package frc.robot.util;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class BangBangController {
 
     private double motorPower;
@@ -9,6 +11,9 @@ public class BangBangController {
     private boolean oneSidedControl;
 
     private double sensor;
+    private double prevSensor;
+    private double prevTimestamp;
+    private double velocity;
     private double setpoint;
 
     public BangBangController(double motorPower, double positionTolerance, double velocityTolerance,
@@ -24,6 +29,11 @@ public class BangBangController {
 
     public double calculate(double sensor) {
         this.sensor = sensor;
+        double dMin = (Timer.getFPGATimestamp() - prevTimestamp) / 60.0;
+        velocity = (sensor - prevSensor) / dMin;
+        prevSensor = sensor;
+        prevTimestamp = Timer.getFPGATimestamp();
+
         if (sensor < setpoint - positionTolerance)
             return motorPower;
         else if ((sensor > setpoint + positionTolerance) && !oneSidedControl)
@@ -48,12 +58,12 @@ public class BangBangController {
         return motorPower;
     }
 
-    public void setMotorPower(double motorPower) {
-        this.motorPower = motorPower;
-    }
-
     public double getTolerance() {
         return positionTolerance;
+    }
+
+    public double getVelocity() {
+        return velocity;
     }
 
     public void setTolerance(double tolerance) {
@@ -64,11 +74,18 @@ public class BangBangController {
         return velocityTolerance;
     }
 
+    /**
+     * Set velocity tolerance in RPM
+     * 
+     * @param velocityTolerance in RPM
+     */
     public void setVelocityTolerance(double velocityTolerance) {
         this.velocityTolerance = velocityTolerance;
     }
 
     public boolean onTarget() {
-        return (sensor > setpoint - positionTolerance) && ((sensor < setpoint + positionTolerance) || oneSidedControl);
+        return (sensor > setpoint - positionTolerance) //
+                && ((sensor < setpoint + positionTolerance) || oneSidedControl) //
+                && Math.abs(velocity) < velocityTolerance;
     }
 }

@@ -53,13 +53,14 @@ public final class Constants {
         public static final boolean kmotor2Inverted = !kmotor1Inverted;
 
         public static final double kMotorIntakePower = 0.5;
-        public static final double kMotorIntakeBangBangPositionToleranceRotations = 0.5;// TODO:
+        public static final double kMotorIntakeBangBangPositionToleranceRotations = 0.2;// TODO:
         public static final double kMotorIntakeBangBangVelocityToleranceRPM = 15;// TODO:
+        public static final double kP = 2; // TODO:
 
         public static final double kEncoderTicksToRotations = 1.0 / 2048.0;
         public static final double kEncoderTicksToRPM = 600.0 / 2048.0;
 
-        public static final double kRotationsPerBall = 4.5;
+        public static final double kRotationsPerBall = 4.5; // TODO:
         public static final double kFeederLengthRotations = 50;
 
         public static final double kOuttakeDelaySec = 0.75;

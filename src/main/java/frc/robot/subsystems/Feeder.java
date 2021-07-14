@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FeederConstants;
-import frc.robot.util.BangBangController;
 
 public class Feeder extends SubsystemBase {
     private static Feeder instance;
@@ -23,10 +23,12 @@ public class Feeder extends SubsystemBase {
     // FeederConstants.kPistonForwardChannel,
     // FeederConstants.kPistonReverseChannel);
 
-    private BangBangController contorller = new BangBangController(//
-            FeederConstants.kMotorIntakePower, //
-            FeederConstants.kMotorIntakeBangBangPositionToleranceRotations,
-            FeederConstants.kMotorIntakeBangBangVelocityToleranceRPM);
+    private PIDController controller = new PIDController(FeederConstants.kP, 0, 0);
+
+    // private BangBangController contorller = new BangBangController(//
+    // FeederConstants.kMaxMotorIntakePower, //
+    // FeederConstants.kMotorIntakeBangBangPositionToleranceRotations,
+    // FeederConstants.kMotorIntakeBangBangVelocityToleranceRPM);
 
     private int ballCount = 0;
 
@@ -41,6 +43,9 @@ public class Feeder extends SubsystemBase {
     private Feeder() {
         motor1.setInverted(FeederConstants.kmotor1Inverted);
         motor2.setInverted(FeederConstants.kmotor2Inverted);
+
+        controller.setTolerance(FeederConstants.kMotorIntakeBangBangPositionToleranceRotations,
+                FeederConstants.kMotorIntakeBangBangVelocityToleranceRPM / 60);
     }
 
     @Override
@@ -104,8 +109,9 @@ public class Feeder extends SubsystemBase {
      * spin motors by the diameter of a ball plus some margin.
      */
     public void setPosition(double setpoint) {
-        contorller.setSetpoint(setpoint);
-        setMotor(contorller.calculate(getEncoderPosition()));
+        double power = controller.calculate(getEncoderPosition(), setpoint);
+        power = clamp(power, FeederConstants.kMotorIntakePower, -FeederConstants.kMotorIntakePower);
+        setMotor(power);
     }
 
     /**
@@ -116,7 +122,7 @@ public class Feeder extends SubsystemBase {
      * @return true if on target
      */
     public boolean onTarget() {
-        return contorller.onTarget();
+        return controller.atSetpoint();
     }
 
     /*
@@ -170,6 +176,7 @@ public class Feeder extends SubsystemBase {
     private void updateTelemetry() {
         SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
         SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+        SmartDashboard.putNumber(getName() + " Setpoint", controller.getSetpoint());
         SmartDashboard.putBoolean(getName() + " In IR Sensor", getBallEntrySensor());
         SmartDashboard.putBoolean(getName() + " Out IR Sensor", getBallExitSensor());
         SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
@@ -190,6 +197,13 @@ public class Feeder extends SubsystemBase {
             DriverStation.reportError(getName() + "Motors outputs mismatch!", false);
         if (Math.abs(motor1.getTemperature() - motor2.getTemperature()) > 20)
             DriverStation.reportError(getName() + "Motors temperature mismatch!", false);
+    }
 
+    private double clamp(double value, double max, double min) {
+        if (value < min)
+            return min;
+        if (value > max)
+            return max;
+        return value;
     }
 }
