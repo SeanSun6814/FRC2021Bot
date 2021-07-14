@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project FeederShooterSol)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "FeederShooterSol",
+    "language": "java"
+  }
+]
