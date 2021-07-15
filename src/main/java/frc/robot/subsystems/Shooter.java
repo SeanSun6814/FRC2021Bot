@@ -117,17 +117,20 @@ public class Shooter extends SubsystemBase {
      */
     @SuppressWarnings("deprecation")
     private void updateTelemetry() {
-        SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
-        SmartDashboard.putBoolean(getName() + " On Target", onTarget());
-        SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
-        SmartDashboard.putNumber(getName() + " % Output1", motor1.getMotorOutputPercent());
-        SmartDashboard.putNumber(getName() + " % Output2", motor2.getMotorOutputPercent());
-        SmartDashboard.putNumber(getName() + " Current (Amps)", motor1.getOutputCurrent());
-        SmartDashboard.putNumber(getName() + " Current1 (Amps)", motor2.getOutputCurrent());
-        SmartDashboard.putNumber(getName() + " Voltage (Volts)", motor1.getMotorOutputVoltage());
-        SmartDashboard.putNumber(getName() + " Voltage1 (Volts)", motor2.getMotorOutputVoltage());
-        SmartDashboard.putNumber(getName() + " Temp1", motor1.getTemperature());
-        SmartDashboard.putNumber(getName() + " Temp2", motor2.getTemperature());
+
+        if (Constants.debug) {
+            SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
+            SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+            SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
+            SmartDashboard.putNumber(getName() + " % Output1", motor1.getMotorOutputPercent());
+            SmartDashboard.putNumber(getName() + " % Output2", motor2.getMotorOutputPercent());
+            SmartDashboard.putNumber(getName() + " Current (Amps)", motor1.getOutputCurrent());
+            SmartDashboard.putNumber(getName() + " Current1 (Amps)", motor2.getOutputCurrent());
+            SmartDashboard.putNumber(getName() + " Voltage (Volts)", motor1.getMotorOutputVoltage());
+            SmartDashboard.putNumber(getName() + " Voltage1 (Volts)", motor2.getMotorOutputVoltage());
+            SmartDashboard.putNumber(getName() + " Temp1", motor1.getTemperature());
+            SmartDashboard.putNumber(getName() + " Temp2", motor2.getTemperature());
+        }
 
         if (Math.abs(motor1.getOutputCurrent() - motor2.getOutputCurrent()) > 20)
             DriverStation.reportError(getName() + "Motors current mismatch!", false);

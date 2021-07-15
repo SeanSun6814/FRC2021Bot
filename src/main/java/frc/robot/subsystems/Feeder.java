@@ -4,12 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.FeederConstants;
 
 public class Feeder extends SubsystemBase {
@@ -156,7 +155,7 @@ public class Feeder extends SubsystemBase {
      *              false.
      */
     public void setHardStopPiston(boolean block) {
-        boolean direction = block ^ FeederConstants.kPistonInverted;
+        // boolean direction = block ^ FeederConstants.kPistonInverted;
         // solenoid.set((direction) ? Value.kForward : Value.kReverse);
     }
 
@@ -174,20 +173,22 @@ public class Feeder extends SubsystemBase {
      */
     @SuppressWarnings("deprecation")
     private void updateTelemetry() {
-        SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
-        SmartDashboard.putBoolean(getName() + " On Target", onTarget());
-        SmartDashboard.putNumber(getName() + " Setpoint", controller.getSetpoint());
-        SmartDashboard.putBoolean(getName() + " In IR Sensor", getBallEntrySensor());
-        SmartDashboard.putBoolean(getName() + " Out IR Sensor", getBallExitSensor());
-        SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
-        SmartDashboard.putNumber(getName() + " % Output1", motor1.getMotorOutputPercent());
-        SmartDashboard.putNumber(getName() + " % Output2", motor2.getMotorOutputPercent());
-        SmartDashboard.putNumber(getName() + " Current (Amps)", motor1.getOutputCurrent());
-        SmartDashboard.putNumber(getName() + " Current1 (Amps)", motor2.getOutputCurrent());
-        SmartDashboard.putNumber(getName() + " Voltage (Volts)", motor1.getMotorOutputVoltage());
-        SmartDashboard.putNumber(getName() + " Voltage1 (Volts)", motor2.getMotorOutputVoltage());
-        SmartDashboard.putNumber(getName() + " Temp1", motor1.getTemperature());
-        SmartDashboard.putNumber(getName() + " Temp2", motor2.getTemperature());
+        if (Constants.debug) {
+            SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
+            SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+            SmartDashboard.putNumber(getName() + " Setpoint", controller.getSetpoint());
+            SmartDashboard.putBoolean(getName() + " In IR Sensor", getBallEntrySensor());
+            SmartDashboard.putBoolean(getName() + " Out IR Sensor", getBallExitSensor());
+            SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
+            SmartDashboard.putNumber(getName() + " % Output1", motor1.getMotorOutputPercent());
+            SmartDashboard.putNumber(getName() + " % Output2", motor2.getMotorOutputPercent());
+            SmartDashboard.putNumber(getName() + " Current (Amps)", motor1.getOutputCurrent());
+            SmartDashboard.putNumber(getName() + " Current1 (Amps)", motor2.getOutputCurrent());
+            SmartDashboard.putNumber(getName() + " Voltage (Volts)", motor1.getMotorOutputVoltage());
+            SmartDashboard.putNumber(getName() + " Voltage1 (Volts)", motor2.getMotorOutputVoltage());
+            SmartDashboard.putNumber(getName() + " Temp1", motor1.getTemperature());
+            SmartDashboard.putNumber(getName() + " Temp2", motor2.getTemperature());
+        }
 
         if (Math.abs(motor1.getOutputCurrent() - motor2.getOutputCurrent()) > 20)
             DriverStation.reportError(getName() + "Motors current mismatch!", false);

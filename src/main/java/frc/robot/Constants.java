@@ -2,6 +2,7 @@ package frc.robot;
 
 public final class Constants {
     public static final int kCANTimeoutMS = 10;
+    public static final boolean debug = true;
 
     public class DriverConstants {
         public static final double kHoodAngle1 = 1.4;
@@ -36,13 +37,13 @@ public final class Constants {
 
         public static final double kEncoderTicksToRotations = 1.0 / 2048.0;
         public static final double kEncoderTicksToRPM = 600.0 / 2048.0;
-        public static final double kMotorVelocityToleranceRPM = 70;
+        public static final double kMotorVelocityToleranceRPM = 30;
         public static final int kPIDSlot = 0;
         public static final double kP = 0.5;
         public static final double kI = 0.001;
         public static final double kD = 1;
         public static final double kF = (1023.0 + 100) / 20660.0;
-        public static final double kIZone = 100;
+        public static final double kIZone = 150;
     }
 
     public class FeederConstants {

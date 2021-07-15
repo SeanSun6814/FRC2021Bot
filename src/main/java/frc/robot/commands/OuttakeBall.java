@@ -3,7 +3,9 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -22,6 +24,7 @@ public class OuttakeBall extends CommandBase {
     public OuttakeBall(Supplier<Boolean> confirmationButton) {
         addRequirements(feeder);
         this.confirmationButton = confirmationButton;
+        updateTelemetry();
     }
 
     @Override
@@ -32,6 +35,8 @@ public class OuttakeBall extends CommandBase {
 
     @Override
     public void execute() {
+
+        updateTelemetry();
 
         if (feeder.isEmpty()) {
             feeder.stop();
@@ -83,5 +88,14 @@ public class OuttakeBall extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println(getName() + " ending...");
+    }
+
+    private void updateTelemetry() {
+        if (Constants.debug) {
+            SmartDashboard.putBoolean("Shooter CMD Hood", hood.onTarget());
+            SmartDashboard.putBoolean("Shooter CMD Flywheel", shooter.onTarget());
+            SmartDashboard.putBoolean("Shooter CMD Delay", delayReady());
+            SmartDashboard.putBoolean("Shooter CMD Joystick", confirmationButton.get());
+        }
     }
 }

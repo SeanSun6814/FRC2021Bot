@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.util.ContinuousRotationServo;
 import frc.robot.util.Potentiometer;
@@ -97,13 +98,14 @@ public class Hood extends SubsystemBase {
      */
     @SuppressWarnings("deprecation")
     private void updateTelemetry() {
-        SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
-        SmartDashboard.putNumber(getName() + " Setpoint", controller.getSetpoint());
-        SmartDashboard.putBoolean(getName() + " On Target", onTarget());
-        SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
-        SmartDashboard.putNumber(getName() + " % Output", power);
-        SmartDashboard.putNumber(getName() + " Potentiometer", encoder.getNoisyEncoderPosition());
-        SmartDashboard.putNumber(getName() + " Denoised Potentiometer", getEncoderPosition());
-
+        if (Constants.debug) {
+            SmartDashboard.putNumber(getName() + " Encoder", getEncoderPosition());
+            SmartDashboard.putNumber(getName() + " Setpoint", controller.getSetpoint());
+            SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+            SmartDashboard.putNumber(getName() + " RPM", getEncoderVelocity());
+            SmartDashboard.putNumber(getName() + " % Output", power);
+            SmartDashboard.putNumber(getName() + " Potentiometer", encoder.getNoisyEncoderPosition());
+            SmartDashboard.putNumber(getName() + " Denoised Potentiometer", getEncoderPosition());
+        }
     }
 }
