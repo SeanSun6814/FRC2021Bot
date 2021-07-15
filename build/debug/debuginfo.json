@@ -1,5 +1,12 @@
 [
   {
+    "artifact": "frcJava (in project FeederShooter)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "FeederShooter",
+    "language": "java"
+  },
+  {
     "artifact": "frcJava (in project FeederShooterSol)",
     "target": "roborio",
     "debugfile": "frcJava_roborio.debugconfig",

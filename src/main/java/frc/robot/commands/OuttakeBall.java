@@ -34,6 +34,7 @@ public class OuttakeBall extends CommandBase {
     public void execute() {
 
         if (feeder.isEmpty()) {
+            feeder.stop();
             return;
         }
 

@@ -25,28 +25,27 @@ public class Shooter extends SubsystemBase {
     private TalonFX motor2 = new TalonFX(ShooterConstants.kMotorPort2);
 
     private Shooter() {
+        configMotor(motor1);
+        configMotor(motor2);
+    }
 
-        motor1.setInverted(ShooterConstants.kMotor1Inverted);
-        motor2.setInverted(ShooterConstants.kMotor2Inverted);
+    private void configMotor(TalonFX motor) {
+        motor.setInverted(ShooterConstants.kMotor1Inverted);
 
-        motor1.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDSlot,
+        motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDSlot,
                 Constants.kCANTimeoutMS);
-        motor2.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDSlot,
-                Constants.kCANTimeoutMS);
 
-        motor1.config_kP(ShooterConstants.kPIDSlot, ShooterConstants.kP, Constants.kCANTimeoutMS);
-        motor1.config_kI(ShooterConstants.kPIDSlot, ShooterConstants.kI, Constants.kCANTimeoutMS);
-        motor1.config_kD(ShooterConstants.kPIDSlot, ShooterConstants.kD, Constants.kCANTimeoutMS);
-        motor1.config_kF(ShooterConstants.kPIDSlot, ShooterConstants.kF, Constants.kCANTimeoutMS);
-        motor2.config_kP(ShooterConstants.kPIDSlot, ShooterConstants.kP, Constants.kCANTimeoutMS);
-        motor2.config_kI(ShooterConstants.kPIDSlot, ShooterConstants.kI, Constants.kCANTimeoutMS);
-        motor2.config_kD(ShooterConstants.kPIDSlot, ShooterConstants.kD, Constants.kCANTimeoutMS);
-        motor2.config_kF(ShooterConstants.kPIDSlot, ShooterConstants.kF, Constants.kCANTimeoutMS);
+        motor.config_kP(ShooterConstants.kPIDSlot, ShooterConstants.kP, Constants.kCANTimeoutMS);
+        motor.config_kI(ShooterConstants.kPIDSlot, ShooterConstants.kI, Constants.kCANTimeoutMS);
+        motor.config_kD(ShooterConstants.kPIDSlot, ShooterConstants.kD, Constants.kCANTimeoutMS);
+        motor.config_kF(ShooterConstants.kPIDSlot, ShooterConstants.kF, Constants.kCANTimeoutMS);
 
-        motor1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 80, 80, 0.25));
-        motor1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 80, 80, 0.25));
-        motor2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 80, 80, 0.25));
-        motor2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 80, 80, 0.25));
+        motor.config_IntegralZone(ShooterConstants.kPIDSlot, ShooterConstants.kIZone, Constants.kCANTimeoutMS);
+
+        motor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, ShooterConstants.kCurrentLimitAmps,
+                ShooterConstants.kCurrentLimitAmps, ShooterConstants.kCurrentLimitDelay));
+        motor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, ShooterConstants.kCurrentLimitAmps,
+                ShooterConstants.kCurrentLimitAmps, ShooterConstants.kCurrentLimitDelay));
     }
 
     @Override

@@ -44,8 +44,8 @@ public class Feeder extends SubsystemBase {
         motor1.setInverted(FeederConstants.kmotor1Inverted);
         motor2.setInverted(FeederConstants.kmotor2Inverted);
 
-        controller.setTolerance(FeederConstants.kMotorIntakeBangBangPositionToleranceRotations,
-                FeederConstants.kMotorIntakeBangBangVelocityToleranceRPM / 60);
+        controller.setTolerance(FeederConstants.kMotorIntakePositionToleranceRotations,
+                FeederConstants.kMotorIntakeVelocityToleranceRPM / 60);
     }
 
     @Override

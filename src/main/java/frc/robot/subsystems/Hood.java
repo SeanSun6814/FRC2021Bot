@@ -49,6 +49,9 @@ public class Hood extends SubsystemBase {
         else if (power < -HoodConstants.kMaxPowerLimit)
             power = -HoodConstants.kMaxPowerLimit;
 
+        if (Math.abs(power) < HoodConstants.kDeadband)
+            power = 0;
+
         servo1.set(power);
         servo2.set(-power);
         this.power = power;
