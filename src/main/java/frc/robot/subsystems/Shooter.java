@@ -25,12 +25,15 @@ public class Shooter extends SubsystemBase {
     private TalonFX motor2 = new TalonFX(ShooterConstants.kMotorPort2);
 
     private Shooter() {
+
+        motor1.setInverted(ShooterConstants.kMotor1Inverted);
+        motor2.setInverted(ShooterConstants.kMotor2Inverted);
+
         configMotor(motor1);
         configMotor(motor2);
     }
 
     private void configMotor(TalonFX motor) {
-        motor.setInverted(ShooterConstants.kMotor1Inverted);
 
         motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDSlot,
                 Constants.kCANTimeoutMS);

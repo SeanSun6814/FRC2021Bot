@@ -7,7 +7,11 @@ public final class Constants {
     public class DriverConstants {
         public static final double kHoodAngle1 = 1.4;
         public static final double kHoodAngle2 = 2.3;
-        public static final double kShooterRPM1 = 800;
+        public static final double kShooterRPM1 = 2050;
+        public static final double kShooterRPM2 = 3000;
+        public static final double kShooterRPM3 = 4000;
+        public static final double kShooterRPM4 = 5000;
+        public static final double kShooterRPM5 = 6000;
     }
 
     public class HoodConstants {
@@ -37,7 +41,7 @@ public final class Constants {
 
         public static final double kEncoderTicksToRotations = 1.0 / 2048.0;
         public static final double kEncoderTicksToRPM = 600.0 / 2048.0;
-        public static final double kMotorVelocityToleranceRPM = 30;
+        public static final double kMotorVelocityToleranceRPM = 10;
         public static final int kPIDSlot = 0;
         public static final double kP = 0.5;
         public static final double kI = 0.001;

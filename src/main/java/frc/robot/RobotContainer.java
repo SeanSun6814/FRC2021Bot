@@ -20,7 +20,7 @@ public class RobotContainer {
     private Feeder feeder = Feeder.getInstance();
 
     private Joystick joy1 = new Joystick(0);
-    private Joystick joy2 = new Joystick(1);
+    // private Joystick joy2 = new Joystick(1);
 
     public RobotContainer() {
         shooter.setDefaultCommand(new ShooterIdle(joy1));
@@ -33,11 +33,35 @@ public class RobotContainer {
                 () -> joy1.getRawButton(1) //
         ));
 
-        new JoystickButton(joy2, 3).whenHeld(new HoodSetPosition(DriverConstants.kHoodAngle1));
-        new JoystickButton(joy2, 4).whenHeld(new HoodSetPosition(DriverConstants.kHoodAngle2));
+                new JoystickButton(joy1, 3).whenHeld(new ShootCmd( //
+                DriverConstants.kHoodAngle2, //
+                DriverConstants.kShooterRPM2, //
+                () -> joy1.getRawButton(1) //
+        ));
 
-        new JoystickButton(joy1, 3).whenHeld(new ShooterSetVelocity(1000));
-        new JoystickButton(joy1, 4).whenHeld(new ShooterSetVelocity(3000));
+                   new JoystickButton(joy1, 4).whenHeld(new ShootCmd( //
+                DriverConstants.kHoodAngle2, //
+                DriverConstants.kShooterRPM3, //
+                () -> joy1.getRawButton(1) //
+        ));
+
+                   new JoystickButton(joy1, 5).whenHeld(new ShootCmd( //
+                DriverConstants.kHoodAngle2, //
+                DriverConstants.kShooterRPM4, //
+                () -> joy1.getRawButton(1) //
+        ));
+
+                   new JoystickButton(joy1, 6).whenHeld(new ShootCmd( //
+                DriverConstants.kHoodAngle2, //
+                DriverConstants.kShooterRPM5, //
+                () -> joy1.getRawButton(1) //
+        ));
+
+        // new JoystickButton(joy2, 3).whenHeld(new HoodSetPosition(DriverConstants.kHoodAngle1));
+        // new JoystickButton(joy2, 4).whenHeld(new HoodSetPosition(DriverConstants.kHoodAngle2));
+
+        // new JoystickButton(joy1, 3).whenHeld(new ShooterSetVelocity(1000));
+        // new JoystickButton(joy1, 4).whenHeld(new ShooterSetVelocity(3000));
     }
 
     public Command getAutonomousCommand() {
