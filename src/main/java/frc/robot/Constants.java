@@ -1,8 +1,128 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+
 public final class Constants {
     public static final int kCANTimeoutMS = 10;
     public static final boolean debug = true;
+    public static double kInf = 1e8;
+
+    public static final class DriveConstants {
+        public static final int kFrontLeftDriveMotorPort = 3;
+        public static final int kBackLeftDriveMotorPort = 6;
+        public static final int kFrontRightDriveMotorPort = 2;
+        public static final int kBackRightDriveMotorPort = 8;
+
+        public static final int kFrontLeftTurningMotorPort = 4;
+        public static final int kBackLeftTurningMotorPort = 5;
+        public static final int kFrontRightTurningMotorPort = 1;
+        public static final int kBackRightTurningMotorPort = 7;
+
+        public static final boolean kFrontLeftTurningEncoderReversed = true;
+        public static final boolean kBackLeftTurningEncoderReversed = true;
+        public static final boolean kFrontRightTurningEncoderReversed = true;
+        public static final boolean kBackRightTurningEncoderReversed = true;
+
+        public static final boolean kFrontLeftDriveEncoderReversed = true;
+        public static final boolean kBackLeftDriveEncoderReversed = true;
+        public static final boolean kFrontRightDriveEncoderReversed = false;
+        public static final boolean kBackRightDriveEncoderReversed = false;
+
+        public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
+        public static final int kBackLeftDriveAbsoluteEncoderPort = 2;
+        public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
+        public static final int kBackRightDriveAbsoluteEncoderPort = 3;
+
+        public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = true;
+        public static final boolean kBackLeftDriveAbsoluteEncoderReversed = true;
+        public static final boolean kFrontRightDriveAbsoluteEncoderReversed = true;
+        public static final boolean kBackRightDriveAbsoluteEncoderReversed = true;
+
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -4.811;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.816;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.252;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.254;
+
+        // Distance between centers of right and left wheels on robot
+        public static final double kTrackWidth = 21 * Units.in2m;
+        // Distance between front and back wheels on robot
+        public static final double kWheelBase = 25.5 * Units.in2m;
+
+        // much more intuitive versions of trackwidth and wheelbase
+        public static final double kHWidth = kTrackWidth;
+        public static final double kVWidth = kWheelBase;
+        public static final double kRadius = Math.sqrt(kHWidth * kHWidth + kVWidth * kVWidth); // 0.8390671404195545
+
+        public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+                new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //
+                new Translation2d(kWheelBase / 2, kTrackWidth / 2), //
+                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), //
+                new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
+
+        public static final double kMaxSpeedMetersPerSecond = 5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+        public static final double kTeleDriveMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond / 4;
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kMaxAngularSpeedRadiansPerSecond / 2;
+
+    }
+
+    public static final class ModuleConstants {
+        public static final double kEncoderTicksPerRotation = 42.0;
+        public static final double kWheelDiameterMeters = 4 * Units.in2m;
+        public static final double kDriveMotorGearRatio = 1 / 5.8462;
+        public static final double kTurningMotorGearRatio = 1 / 18.0;
+        public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
+        public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
+        public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
+        public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
+
+        public static final double kDriveRampSec2FullThrottle = 1 / kInf;
+        public static final double kTurningRampSec2FullThrottle = 1 / kInf;
+
+        // P, I, D, IZone, FF, min, max
+        public static final double[] kTurningPID = { 0.5, 0, 0, 1e8, 0, -1, 1 };
+        public static final double[] kDrivePID = { 0.5, 0, 0, 1e8, 0, -1, 1 };
+    }
+
+    public static final class OIConstants {
+        public static final int kDriverControllerPort = 0;
+        public static final int kOperatorControllerPort = 1;
+
+        public static final int kDriverYAxis = 1;
+        public static final boolean kDriverYAxisInverted = true;
+        public static final int kDriverXAxis = 0;
+        public static final boolean kDriverXAxisInverted = false;
+        public static final int kDriverRotAxis = 4;
+        public static final boolean kDriverRotAxisInverted = false;
+
+        public static final double kDeadband = 0.05;
+
+    }
+
+    public static final class AutoConstants {
+        // 1.2 for fast, 5 for slow spinning
+        public static final double kPXController = 1.5;// 5;
+        public static final double kPYController = 1.5;// 5;
+        public static final double kPThetaController = 3;
+
+        // // Constraint for the motion profilied robot angle controller
+        // public static final TrapezoidProfile.Constraints kThetaControllerConstraints
+        // = //
+        // new TrapezoidProfile.Constraints(//
+        // DriveConstants.kMaxAngularSpeedRadiansPerSecond, //
+        // DriveConstants.kMaxAngularSpeedRadiansPerSecondSquared//
+        // );
+
+        // public static final TrajectoryConfig trajectoryConfig = new
+        // TrajectoryConfig(//
+        // DriveConstants.kMaxSpeedMetersPerSecond / 2, //
+        // DriveConstants.kMaxAccelerationMetersPerSecondSquared / 2)//
+        // .setKinematics(DriveConstants.kDriveKinematics);
+    }
 
     public class DriverConstants {
         public static final double kHoodAngle1 = 1.4;
@@ -74,6 +194,35 @@ public final class Constants {
         public static final double kFeederLengthRotations = 25;
 
         public static final double kOuttakeDelaySec = 0.5;
+    }
+
+    public static final class Units {
+        public static final double in2m = 1 / 39.37;
+        public static final double m2in = 1 * 39.27;
+        public static final double ft2in = 1 * 12.0;
+        public static final double in2ft = 1 / 12.0;
+        public static final double ft2m = 1 / 3.281;
+        public static final double m2ft = 1 * 3.281;
+
+        public static double normalizeRad(double rad) {
+            rad = rad % (2 * Math.PI);
+            if (rad < 0)
+                rad += 2.0 * Math.PI;
+            return rad;
+        }
+
+        public static boolean sameSign(double... n) {
+            boolean sign = n[0] >= 0 ? true : false;
+
+            for (int i = 1; i < n.length; i++)
+                if ((sign && n[i] < 0) || (!sign && n[i] >= 0))
+                    return false;
+            return true;
+        }
+
+        public static boolean doubleEquals(double a, double b) {
+            return Math.abs(a - b) < 1 / kInf;
+        }
     }
 
 }
