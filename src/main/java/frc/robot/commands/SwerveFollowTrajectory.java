@@ -37,6 +37,7 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("MemberName")
 public class SwerveFollowTrajectory extends CommandBase {
+    private final SwerveDrivetrain swerveDrivetrain = SwerveDrivetrain.getInstance();
     private final Timer m_timer = new Timer();
     private final Logger logger;
     private final Trajectory trajectory;
@@ -45,7 +46,6 @@ public class SwerveFollowTrajectory extends CommandBase {
     private final SwerveController controller;
     private final Consumer<SwerveModuleState[]> outputModuleStates;
     private final AngularTrajectory angularProfile;
-    private final SwerveDrivetrain swerveDrivetrain;
     private final Pose2d tolerance;
     private final Pose2d velTolerance;
     private final boolean reqReset;
@@ -70,7 +70,7 @@ public class SwerveFollowTrajectory extends CommandBase {
      *                         (enter null for no tolerance - command will finish as
      *                         soon as the trajectory's duration ends)
      */
-    public SwerveFollowTrajectory(SwerveDrivetrain swerveDrivetrain, Trajectory trajectory,
+    public SwerveFollowTrajectory(Trajectory trajectory,
             AngularTrajectory angularProfile, Pose2d tolerance, Pose2d velTolerance, boolean enableFeedback,
             boolean reqReset) {
 
@@ -90,7 +90,6 @@ public class SwerveFollowTrajectory extends CommandBase {
         if (velTolerance == null)
             velTolerance = new Pose2d(Constants.kInf, Constants.kInf, new Rotation2d(Constants.kInf));
 
-        this.swerveDrivetrain = swerveDrivetrain;
         this.trajectory = trajectory;
         this.pose = swerveDrivetrain::getPose;
         this.kinematics = DriveConstants.kDriveKinematics;

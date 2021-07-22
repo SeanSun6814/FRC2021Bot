@@ -13,7 +13,7 @@ import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.util.JoystickValueSmoother;
 
 public class SwerveTeleDrive extends CommandBase {
-    private final SwerveDrivetrain swerveDrivetrain;
+    private final SwerveDrivetrain swerveDrivetrain = SwerveDrivetrain.getInstance();
     private final Supplier<Double> xSpd;
     private final Supplier<Double> ySpd;
     private final Supplier<Double> rotSpd;
@@ -21,14 +21,12 @@ public class SwerveTeleDrive extends CommandBase {
 
     private final JoystickValueSmoother xSmooth, ySmooth, rotSmooth;
 
-    public SwerveTeleDrive(SwerveDrivetrain swerveDrivetrain, double xSpd, double ySpd, double angSpeed,
-            boolean fieldOriented) {
-        this(swerveDrivetrain, () -> xSpd, () -> ySpd, () -> angSpeed, fieldOriented);
+    public SwerveTeleDrive(double xSpd, double ySpd, double angSpeed, boolean fieldOriented) {
+        this(() -> xSpd, () -> ySpd, () -> angSpeed, fieldOriented);
     }
 
-    public SwerveTeleDrive(SwerveDrivetrain swerveDrivetrain, Supplier<Double> xSpd, Supplier<Double> ySpd,
-            Supplier<Double> angSpeed, boolean fieldOriented) {
-        this.swerveDrivetrain = swerveDrivetrain;
+    public SwerveTeleDrive(Supplier<Double> xSpd, Supplier<Double> ySpd, Supplier<Double> angSpeed,
+            boolean fieldOriented) {
         this.xSpd = xSpd;
         this.ySpd = ySpd;
         this.rotSpd = angSpeed;
@@ -52,7 +50,6 @@ public class SwerveTeleDrive extends CommandBase {
 
     @Override
     public void execute() {
-        super.execute();
         // xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
         // ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
         // rotSpd *= DriveConstants.kMaxAngularSpeedRadiansPerSecond;
@@ -66,7 +63,6 @@ public class SwerveTeleDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        super.end(interrupted);
         swerveDrivetrain.stopModules();
         System.out.println(getName() + " command ended, interrupted=[" + interrupted + "].");
     }

@@ -26,107 +26,89 @@ import frc.robot.swerve.SwerveTrajectory;
 import frc.robot.swerve.Trajectories;
 
 public class RobotContainer {
-    private Command autoCommand;
+        private Command autoCommand;
 
-    private final SwerveDrivetrain swerveDrivetrain = SwerveDrivetrain.getInstance();
-    private final Limelight limelight = Limelight.getInstance();
+        private final SwerveDrivetrain swerveDrivetrain = SwerveDrivetrain.getInstance();
+        private final Limelight limelight = Limelight.getInstance();
 
-    private Shooter shooter = Shooter.getInstance();
-    private Hood hood = Hood.getInstance();
-    private Feeder feeder = Feeder.getInstance();
+        private Shooter shooter = Shooter.getInstance();
+        private Hood hood = Hood.getInstance();
+        private Feeder feeder = Feeder.getInstance();
 
-    private Joystick driverJoy = new Joystick(OIConstants.kDriverControllerPort);
-    private Joystick operatorJoy = new Joystick(OIConstants.kOperatorControllerPort);
+        private Joystick driverJoy = new Joystick(OIConstants.kDriverControllerPort);
+        private Joystick operatorJoy = new Joystick(OIConstants.kOperatorControllerPort);
 
-    public RobotContainer() {
-        initAutonomousCommand();
-        shooter.setDefaultCommand(new ShooterIdle(operatorJoy));
-        hood.setDefaultCommand(new HoodSetPosition(DriverConstants.kHoodAngle1));
-        feeder.setDefaultCommand(new IntakeBall());
-        swerveDrivetrain.setDefaultCommand(new SwerveTeleDrive(//
-                swerveDrivetrain, //
-                () -> driverJoy.getRawAxis(OIConstants.kDriverYAxis) //
-                        * (OIConstants.kDriverYAxisInverted ? -1.0 : 1.0), //
-                () -> driverJoy.getRawAxis(OIConstants.kDriverXAxis) //
-                        * (OIConstants.kDriverXAxisInverted ? -1.0 : 1.0), //
-                () -> driverJoy.getRawAxis(OIConstants.kDriverRotAxis)
-                        * (OIConstants.kDriverRotAxisInverted ? -1.0 : 1.0), //
-                true)//
-        );
+        public RobotContainer() {
+                initAutonomousCommand();
+                shooter.setDefaultCommand(new ShooterIdle(operatorJoy));
+                hood.setDefaultCommand(new HoodSetPosition(DriverConstants.kHoodAngle1));
+                feeder.setDefaultCommand(new IntakeBall());
+                swerveDrivetrain.setDefaultCommand(new SwerveTeleDrive(//
+                                () -> driverJoy.getRawAxis(OIConstants.kDriverYAxis) //
+                                                * (OIConstants.kDriverYAxisInverted ? -1.0 : 1.0), //
+                                () -> driverJoy.getRawAxis(OIConstants.kDriverXAxis) //
+                                                * (OIConstants.kDriverXAxisInverted ? -1.0 : 1.0), //
+                                () -> driverJoy.getRawAxis(OIConstants.kDriverRotAxis)
+                                                * (OIConstants.kDriverRotAxisInverted ? -1.0 : 1.0), //
+                                true)//
+                );
 
-        SmartDashboard.putData(CommandScheduler.getInstance());
-        SmartDashboard.putData(new InstantCommand(() -> swerveDrivetrain.zeroHeading()));
+                SmartDashboard.putData(CommandScheduler.getInstance());
+                SmartDashboard.putData(new InstantCommand(() -> swerveDrivetrain.zeroHeading()));
 
-        new JoystickButton(driverJoy, 1).whileActiveOnce(new SwerveTeleDrive(//
-                swerveDrivetrain, //
-                () -> limelight.isValid() ? -limelight.getY() / 20.0 / 1 : 0.0, //
-                () -> 0.0, //
-                () -> limelight.isValid() ? limelight.getX() / 27.0 / 4 : 0.0, //
-                false)//
-        );
+                new JoystickButton(driverJoy, 1).whileActiveOnce(new SwerveTeleDrive(//
+                                () -> limelight.isValid() ? -limelight.getY() / 20.0 / 1 : 0.0, //
+                                () -> 0.0, //
+                                () -> limelight.isValid() ? limelight.getX() / 27.0 / 4 : 0.0, //
+                                false)//
+                );
 
-        new JoystickButton(operatorJoy, 2).whenHeld(new ShootCmd( //
-                DriverConstants.kHoodAngle2, //
-                DriverConstants.kShooterRPM1, //
-                () -> operatorJoy.getRawButton(1) //
-        ));
+                new JoystickButton(operatorJoy, 2).whenHeld(new ShootCmd( //
+                                DriverConstants.kHoodAngle2, //
+                                DriverConstants.kShooterRPM1, //
+                                DriverConstants.kLimeightX1, //
+                                DriverConstants.kLimeightY1, //
+                                DriverConstants.kEnableLimeightX, //
+                                DriverConstants.kEnableLimeightY, //
+                                () -> operatorJoy.getRawButton(1) //
+                ));
 
-        new JoystickButton(operatorJoy, 3).whenHeld(new ShootCmd( //
-                DriverConstants.kHoodAngle2, //
-                DriverConstants.kShooterRPM2, //
-                () -> operatorJoy.getRawButton(1) //
-        ));
+                // new JoystickButton(joy2, 3).whenHeld(new
+                // HoodSetPosition(DriverConstants.kHoodAngle1));
+                // new JoystickButton(joy2, 4).whenHeld(new
+                // HoodSetPosition(DriverConstants.kHoodAngle2));
 
-        new JoystickButton(operatorJoy, 4).whenHeld(new ShootCmd( //
-                DriverConstants.kHoodAngle2, //
-                DriverConstants.kShooterRPM3, //
-                () -> operatorJoy.getRawButton(1) //
-        ));
+                // new JoystickButton(joy1, 3).whenHeld(new ShooterSetVelocity(1000));
+                // new JoystickButton(joy1, 4).whenHeld(new ShooterSetVelocity(3000));
+        }
 
-        new JoystickButton(operatorJoy, 5).whenHeld(new ShootCmd( //
-                DriverConstants.kHoodAngle2, //
-                DriverConstants.kShooterRPM4, //
-                () -> operatorJoy.getRawButton(1) //
-        ));
+        private void initAutonomousCommand() {
+                SwerveTrajectory swerveTrajectory = Trajectories.getAutoNavSlalomTrajectory();
+                // SwerveTrajectory swerveTrajectory = Trajectories.getExampleTrajectory();
 
-        new JoystickButton(operatorJoy, 6).whenHeld(new ShootCmd( //
-                DriverConstants.kHoodAngle2, //
-                DriverConstants.kShooterRPM5, //
-                () -> operatorJoy.getRawButton(1) //
-        ));
+                Trajectory trajectory = swerveTrajectory.trajectory;
+                AngularTrajectory angularTrajectory = swerveTrajectory.angularTrajectory;
+                Pose2d tolerance = swerveTrajectory.tolerance;
+                Pose2d velTolerance = swerveTrajectory.velTolerance;
+                boolean enableFeedback = swerveTrajectory.enableFeedback;
+                boolean reqReset = swerveTrajectory.reqReset;
 
-        // new JoystickButton(joy2, 3).whenHeld(new
-        // HoodSetPosition(DriverConstants.kHoodAngle1));
-        // new JoystickButton(joy2, 4).whenHeld(new
-        // HoodSetPosition(DriverConstants.kHoodAngle2));
+                var trajFollowCmd1 = new SwerveFollowTrajectory(trajectory, //
+                                angularTrajectory, //
+                                tolerance, //
+                                velTolerance, //
+                                enableFeedback, //
+                                reqReset);
 
-        // new JoystickButton(joy1, 3).whenHeld(new ShooterSetVelocity(1000));
-        // new JoystickButton(joy1, 4).whenHeld(new ShooterSetVelocity(3000));
-    }
+                autoCommand = trajFollowCmd1.andThen(new SwerveTeleDrive(0, 0, 0, true));
+                // return new WaitCommand(20)
+                // .andThen(trajFollowCmd1.andThen(new SwerveTeleDrive(swerveDrivetrain, 0, 0,
+                // 0, true)));
+        }
 
-    private void initAutonomousCommand() {
-        SwerveTrajectory swerveTrajectory = Trajectories.getAutoNavSlalomTrajectory();
-        // SwerveTrajectory swerveTrajectory = Trajectories.getExampleTrajectory();
-
-        Trajectory trajectory = swerveTrajectory.trajectory;
-        AngularTrajectory angularTrajectory = swerveTrajectory.angularTrajectory;
-        Pose2d tolerance = swerveTrajectory.tolerance;
-        Pose2d velTolerance = swerveTrajectory.velTolerance;
-        boolean enableFeedback = swerveTrajectory.enableFeedback;
-        boolean reqReset = swerveTrajectory.reqReset;
-
-        var trajFollowCmd1 = new SwerveFollowTrajectory(swerveDrivetrain, trajectory, angularTrajectory, tolerance,
-                velTolerance, enableFeedback, reqReset);
-
-        autoCommand = trajFollowCmd1.andThen(new SwerveTeleDrive(swerveDrivetrain, 0, 0, 0, true));
-        // return new WaitCommand(20)
-        // .andThen(trajFollowCmd1.andThen(new SwerveTeleDrive(swerveDrivetrain, 0, 0,
-        // 0, true)));
-    }
-
-    public Command getAutonomousCommand() {
-        if (autoCommand == null)
-            initAutonomousCommand();
-        return autoCommand;
-    }
+        public Command getAutonomousCommand() {
+                if (autoCommand == null)
+                        initAutonomousCommand();
+                return autoCommand;
+        }
 }

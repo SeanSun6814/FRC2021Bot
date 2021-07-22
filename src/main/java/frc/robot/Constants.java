@@ -63,11 +63,28 @@ public final class Constants {
         public static final double kMaxSpeedMetersPerSecond = 5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+        public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond / 4;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kMaxAngularSpeedRadiansPerSecond / 2;
 
+    }
+
+    public static final class LimelightConstants {
+        public static final int kRunningAvgWindow = 3;
+        public static final double[] kXPIDIZone = { 0, 0, 0, 0 }; // TODO:
+        public static final double[] kYPIDIZone = { 0, 0, 0, 0 };// TODO:
+
+        /**
+         * FOR REFERENCE: new SwerveTeleDrive( () -> limelight.isValid() ?
+         * -limelight.getY() / 20.0 / 1 : 0.0, () -> 0.0, () -> limelight.isValid() ?
+         * limelight.getX() / 27.0 / 4 : 0.0, false)
+         */
+        public static final double kXPosToleranceDegs = 0;
+        public static final double kXVelToleranceDegsPerSec = 0;
+        public static final double kYPosToleranceDegs = 0;
+        public static final double kYVelToleranceDegsPerSec = 0;
+        public static final double kScanningSpeed = 0.5;
     }
 
     public static final class ModuleConstants {
@@ -132,6 +149,11 @@ public final class Constants {
         public static final double kShooterRPM3 = 4000;
         public static final double kShooterRPM4 = 5000;
         public static final double kShooterRPM5 = 6000;
+        public static final double kLimeightX1 = 0;
+        public static final double kLimeightY1 = 10; // TODO:
+        public static final boolean kEnableLimeightX = true;
+        public static final boolean kEnableLimeightY = false; // TODO:
+
     }
 
     public class HoodConstants {
@@ -161,7 +183,7 @@ public final class Constants {
 
         public static final double kEncoderTicksToRotations = 1.0 / 2048.0;
         public static final double kEncoderTicksToRPM = 600.0 / 2048.0;
-        public static final double kMotorVelocityToleranceRPM = 10;
+        public static final double kMotorVelocityToleranceRPM = 5; // TODO: was 10, is 5 ok?
         public static final int kPIDSlot = 0;
         public static final double kP = 0.5;
         public static final double kI = 0.001;
@@ -222,6 +244,10 @@ public final class Constants {
 
         public static boolean doubleEquals(double a, double b) {
             return Math.abs(a - b) < 1 / kInf;
+        }
+
+        public static double clamp(double val, double min, double max) {
+            return Math.max(min, Math.min(val, max));
         }
     }
 
