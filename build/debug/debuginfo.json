@@ -12,5 +12,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "FeederShooterSol",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project SwerveFeederShooter)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "SwerveFeederShooter",
+    "language": "java"
   }
 ]

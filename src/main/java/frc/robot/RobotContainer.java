@@ -107,8 +107,9 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
-                if (autoCommand == null)
-                        initAutonomousCommand();
-                return autoCommand;
+                return null;
+                // if (autoCommand == null)
+                //         initAutonomousCommand();
+                // return autoCommand;
         }
 }

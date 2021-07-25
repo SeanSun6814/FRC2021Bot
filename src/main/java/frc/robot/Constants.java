@@ -161,7 +161,7 @@ public final class Constants {
         public static final int kMotorPort2 = 1;
         public static final double kDeadband = 0.07;
         public static final double kPercentageToRotations = 10;
-        public static final int kPotentiometerPort = 0;
+        public static final int kPotentiometerPort = 4;
         public static final int kPotentiometerAvgWindow = 3;
         public static final double kMaxPowerLimit = 0.6;
         public static final double kPositionToleranceRotations = 0.05;

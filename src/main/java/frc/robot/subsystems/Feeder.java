@@ -66,7 +66,10 @@ public class Feeder extends SubsystemBase {
      * @return whether the sensor currently sensed a ball
      */
     public boolean getBallEntrySensor() {
-        return !feederInput.get();
+        return feederInput.get();
+        // TODO: I don't konw why it is not inverted. Always worked with
+        // !feederInput.get(); but today it was just the opposite. Until someone figures
+        // it out it will stay this way
     }
 
     public boolean getBallExitSensor() {
