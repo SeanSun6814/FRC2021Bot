@@ -77,8 +77,8 @@ public final class Constants {
 
     public static final class LimelightConstants {
         public static final int kRunningAvgWindow = 3;
-        public static final double[] kXPIDIZone = { 1 / 27.0 / 4, 0, 0.001, 0 }; // TODO:
-        public static final double[] kYPIDIZone = { 1 / 20.0 / 1, 0, 0.001, 0 };// TODO:
+        public static final double[] kXPIDIZone = { 1 / 27.0 / 4, 0, 0.002, 0 }; // TODO:
+        public static final double[] kYPIDIZone = { 1 / 30.0 / 1, 0, 0.005, 0 };// TODO:
 
         /**
          * FOR REFERENCE: new SwerveTeleDrive( () -> limelight.isValid() ?
