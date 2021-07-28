@@ -1,19 +1,10 @@
 package frc.robot.commands;
 
-import java.util.function.Supplier;
-
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveDrivetrain;
-import frc.robot.util.JoystickValueSmoother;
 import frc.robot.util.MyPIDController;
 
 public class SwerveAim extends CommandBase {
@@ -21,16 +12,16 @@ public class SwerveAim extends CommandBase {
     private final Limelight limelight = Limelight.getInstance();
     private final SwerveTeleDrive swerveTeleDrive;
     private final MyPIDController xController, yController;
-    private boolean enableXSetpoint, enableYSetpoint;
-    private double xSetpoint, ySetpoint;
+    // private boolean enableXSetpoint, enableYSetpoint;
+    // private double xSetpoint, ySetpoint;
     private final double normalizePanSpdDriverToFull, normalizeRotSpdDriverToFull;
 
     public SwerveAim(double xSetpoint, double ySetpoint, boolean enableXSetpoint, boolean enableYSetpoint) {
         addRequirements(swerveDrivetrain);
-        this.xSetpoint = xSetpoint;
-        this.ySetpoint = ySetpoint;
-        this.enableXSetpoint = true;
-        this.enableYSetpoint = true;
+        // this.xSetpoint = xSetpoint;
+        // this.ySetpoint = ySetpoint;
+        // this.enableXSetpoint = true;
+        // this.enableYSetpoint = true;
 
         // Because this command drives the swerve through the tele-drive command,
         // the output gets automatically mapped to the slower "user max speed" settings.
@@ -75,7 +66,7 @@ public class SwerveAim extends CommandBase {
                         return 0.0;
                     if (!limelight.isValid()) // If not found, then scan around
                         return LimelightConstants.kScanningSpeed * normalizeRotSpdDriverToFull;
-                    return xController.calculate(limelight.getX());
+                    return -xController.calculate(limelight.getX());
                 }, //
                 false);
 

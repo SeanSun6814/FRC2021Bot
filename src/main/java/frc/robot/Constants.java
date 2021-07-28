@@ -9,15 +9,15 @@ public final class Constants {
     public static double kInf = 1e8;
 
     public static final class DriveConstants {
-        public static final int kFrontLeftDriveMotorPort = 3;
-        public static final int kBackLeftDriveMotorPort = 6;
-        public static final int kFrontRightDriveMotorPort = 2;
-        public static final int kBackRightDriveMotorPort = 8;
+        public static final int kFrontLeftDriveMotorPort = 8;
+        public static final int kBackLeftDriveMotorPort = 2;
+        public static final int kFrontRightDriveMotorPort = 6;
+        public static final int kBackRightDriveMotorPort = 4;
 
-        public static final int kFrontLeftTurningMotorPort = 4;
-        public static final int kBackLeftTurningMotorPort = 5;
-        public static final int kFrontRightTurningMotorPort = 1;
-        public static final int kBackRightTurningMotorPort = 7;
+        public static final int kFrontLeftTurningMotorPort = 7;
+        public static final int kBackLeftTurningMotorPort = 1;
+        public static final int kFrontRightTurningMotorPort = 5;
+        public static final int kBackRightTurningMotorPort = 3;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -39,10 +39,15 @@ public final class Constants {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = true;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = true;
 
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -4.811;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.816;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.252;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.254;
+        // public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -4.811;
+        // public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.816;
+        // public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.252;
+        // public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.254;
+
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.252;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -4.811;
 
         // Distance between centers of right and left wheels on robot
         public static final double kTrackWidth = 21 * Units.in2m;
@@ -72,19 +77,19 @@ public final class Constants {
 
     public static final class LimelightConstants {
         public static final int kRunningAvgWindow = 3;
-        public static final double[] kXPIDIZone = { 0, 0, 0, 0 }; // TODO:
-        public static final double[] kYPIDIZone = { 0, 0, 0, 0 };// TODO:
+        public static final double[] kXPIDIZone = { 1 / 27.0 / 4, 0, 0.001, 0 }; // TODO:
+        public static final double[] kYPIDIZone = { 1 / 20.0 / 1, 0, 0.001, 0 };// TODO:
 
         /**
          * FOR REFERENCE: new SwerveTeleDrive( () -> limelight.isValid() ?
          * -limelight.getY() / 20.0 / 1 : 0.0, () -> 0.0, () -> limelight.isValid() ?
          * limelight.getX() / 27.0 / 4 : 0.0, false)
          */
-        public static final double kXPosToleranceDegs = 0;
-        public static final double kXVelToleranceDegsPerSec = 0;
-        public static final double kYPosToleranceDegs = 0;
-        public static final double kYVelToleranceDegsPerSec = 0;
-        public static final double kScanningSpeed = 0.5;
+        public static final double kXPosToleranceDegs = 0.3;
+        public static final double kXVelToleranceDegsPerSec = 0.01;
+        public static final double kYPosToleranceDegs = 0.3;
+        public static final double kYVelToleranceDegsPerSec = 0.01;
+        public static final double kScanningSpeed = 0.2;
     }
 
     public static final class ModuleConstants {
@@ -145,14 +150,14 @@ public final class Constants {
         public static final double kHoodAngle1 = 1.4;
         public static final double kHoodAngle2 = 2.3;
         public static final double kShooterRPM1 = 2050;
-        public static final double kShooterRPM2 = 3000;
+        public static final double kShooterRPM2 = 1350;
         public static final double kShooterRPM3 = 4000;
         public static final double kShooterRPM4 = 5000;
         public static final double kShooterRPM5 = 6000;
         public static final double kLimeightX1 = 0;
-        public static final double kLimeightY1 = 10; // TODO:
+        public static final double kLimeightY1 = -3;
         public static final boolean kEnableLimeightX = true;
-        public static final boolean kEnableLimeightY = false; // TODO:
+        public static final boolean kEnableLimeightY = true; // TODO:
 
     }
 
@@ -215,7 +220,7 @@ public final class Constants {
         public static final double kRotationsPerBall = 5.75;
         public static final double kFeederLengthRotations = 25;
 
-        public static final double kOuttakeDelaySec = 0.5;
+        public static final double kOuttakeDelaySec = 0.75;
     }
 
     public static final class Units {

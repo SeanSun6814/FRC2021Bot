@@ -65,7 +65,7 @@ public class RobotContainer {
 
                 new JoystickButton(operatorJoy, 2).whenHeld(new ShootCmd( //
                                 DriverConstants.kHoodAngle2, //
-                                DriverConstants.kShooterRPM1, //
+                                DriverConstants.kShooterRPM2, //
                                 DriverConstants.kLimeightX1, //
                                 DriverConstants.kLimeightY1, //
                                 DriverConstants.kEnableLimeightX, //
@@ -109,7 +109,7 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
                 return null;
                 // if (autoCommand == null)
-                //         initAutonomousCommand();
+                // initAutonomousCommand();
                 // return autoCommand;
         }
 }
