@@ -66,10 +66,7 @@ public class Feeder extends SubsystemBase {
      * @return whether the sensor currently sensed a ball
      */
     public boolean getBallEntrySensor() {
-        return feederInput.get();
-        // TODO: I don't konw why it is not inverted. Always worked with
-        // !feederInput.get(); but today it was just the opposite. Until someone figures
-        // it out it will stay this way
+        return !feederInput.get();
     }
 
     public boolean getBallExitSensor() {
@@ -191,6 +188,7 @@ public class Feeder extends SubsystemBase {
             SmartDashboard.putNumber(getName() + " Voltage1 (Volts)", motor2.getMotorOutputVoltage());
             SmartDashboard.putNumber(getName() + " Temp1", motor1.getTemperature());
             SmartDashboard.putNumber(getName() + " Temp2", motor2.getTemperature());
+            SmartDashboard.putBoolean(getName() + " isEmpty", isEmpty());
         }
 
         if (Math.abs(motor1.getOutputCurrent() - motor2.getOutputCurrent()) > 20)

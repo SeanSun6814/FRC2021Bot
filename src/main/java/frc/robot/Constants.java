@@ -77,7 +77,7 @@ public final class Constants {
 
     public static final class LimelightConstants {
         public static final int kRunningAvgWindow = 3;
-        public static final double[] kXPIDIZone = { 1 / 27.0 / 4, 0, 0.002, 0 }; // TODO:
+        public static final double[] kXPIDIZone = { 1 / 27.0 / 4, 0, 0.001, 0 }; // TODO:
         public static final double[] kYPIDIZone = { 1 / 30.0 / 1, 0, 0.005, 0 };// TODO:
 
         /**
@@ -85,10 +85,10 @@ public final class Constants {
          * -limelight.getY() / 20.0 / 1 : 0.0, () -> 0.0, () -> limelight.isValid() ?
          * limelight.getX() / 27.0 / 4 : 0.0, false)
          */
-        public static final double kXPosToleranceDegs = 0.3;
-        public static final double kXVelToleranceDegsPerSec = 0.01;
-        public static final double kYPosToleranceDegs = 0.3;
-        public static final double kYVelToleranceDegsPerSec = 0.01;
+        public static final double kXPosToleranceDegs = 1.5;
+        public static final double kXVelToleranceDegsPerSec = 2;
+        public static final double kYPosToleranceDegs = 1.5;
+        public static final double kYVelToleranceDegsPerSec = 2;
         public static final double kScanningSpeed = 0.2;
     }
 
@@ -149,9 +149,10 @@ public final class Constants {
     public class DriverConstants {
         public static final double kHoodAngle1 = 1.4;
         public static final double kHoodAngle2 = 2.3;
+        public static final double kHoodAngle3 = 1.8;
         public static final double kShooterRPM1 = 2050;
         public static final double kShooterRPM2 = 1350;
-        public static final double kShooterRPM3 = 4000;
+        public static final double kShooterRPM3 = 1200;
         public static final double kShooterRPM4 = 5000;
         public static final double kShooterRPM5 = 6000;
         public static final double kLimeightX1 = 0;
@@ -209,7 +210,7 @@ public final class Constants {
         public static final boolean kmotor1Inverted = true;
         public static final boolean kmotor2Inverted = !kmotor1Inverted;
 
-        public static final double kMotorIntakePower = 0.5;
+        public static final double kMotorIntakePower = 0.4;
         public static final double kMotorIntakePositionToleranceRotations = 0.2;
         public static final double kMotorIntakeVelocityToleranceRPM = 15;
         public static final double kP = 0.3;
@@ -220,7 +221,7 @@ public final class Constants {
         public static final double kRotationsPerBall = 5.75;
         public static final double kFeederLengthRotations = 25;
 
-        public static final double kOuttakeDelaySec = 0.75;
+        public static final double kOuttakeDelaySec = 0.2; // 0.75;
     }
 
     public static final class Units {

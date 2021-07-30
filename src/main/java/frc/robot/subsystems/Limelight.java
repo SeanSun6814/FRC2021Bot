@@ -11,6 +11,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.Units;
 import frc.robot.util.MeasurementSmoother;
+
 import edu.wpi.first.networktables.*;
 
 public class Limelight extends SubsystemBase {
@@ -30,16 +31,19 @@ public class Limelight extends SubsystemBase {
     private final NetworkTableEntry ty = table.getEntry("ty");
     private final NetworkTableEntry ta = table.getEntry("ta");
     private final NetworkTableEntry tv = table.getEntry("tv");
+    private final NetworkTableEntry ledMode = table.getEntry("ledMode");
 
     private final MeasurementSmoother smoothX = new MeasurementSmoother(LimelightConstants.kRunningAvgWindow), //
             smoothY = new MeasurementSmoother(LimelightConstants.kRunningAvgWindow), //
             smoothArea = new MeasurementSmoother(LimelightConstants.kRunningAvgWindow);
 
     private boolean enableXSetpoint = false, enableYSetpoint = false;
+
     private double xSetpoint = 0, ySetpoint = 0;
 
     private Limelight() {
         System.out.println("Limelight init");
+        setLED(false);
     }
 
     @Override
@@ -94,6 +98,30 @@ public class Limelight extends SubsystemBase {
         return Units.doubleEquals(tv.getDouble(0.0), 1.0);
     }
 
+    public void setLED(boolean on) {
+        if (on)
+            ledMode.setNumber(3);
+        else
+            ledMode.setNumber(3);
+            // ledMode.setNumber(1);
+    }
+
+    public boolean isEnableXSetpoint() {
+        return enableXSetpoint;
+    }
+
+    public void setEnableXSetpoint(boolean enableXSetpoint) {
+        this.enableXSetpoint = enableXSetpoint;
+    }
+
+    public boolean isEnableYSetpoint() {
+        return enableYSetpoint;
+    }
+
+    public void setEnableYSetpoint(boolean enableYSetpoint) {
+        this.enableYSetpoint = enableYSetpoint;
+    }
+
     private void updateTelemetry() {
         if (Constants.debug) {
             SmartDashboard.putNumber("LimelightX", getX());
@@ -104,25 +132,27 @@ public class Limelight extends SubsystemBase {
             SmartDashboard.putNumber("LimelightAreaVel", getAreaVel());
             SmartDashboard.putBoolean("LimelightValid", isValid());
             SmartDashboard.putBoolean("LimelightOnTarget", onTarget());
+            SmartDashboard.putBoolean("LimelightEnableX", enableXSetpoint);
+            SmartDashboard.putBoolean("LimelightEnableY", enableYSetpoint);
         }
     }
 
     public void setSetpoint(double hSetpoint, double vSetpoint) {
-        this.enableYSetpoint = true;
-        this.enableXSetpoint = true;
+        // this.enableYSetpoint = true;
+        // this.enableXSetpoint = true;
         this.ySetpoint = vSetpoint;
         this.xSetpoint = hSetpoint;
     }
 
     public void setHSetpoint(double hSetpoint) {
-        this.enableXSetpoint = true;
-        this.enableYSetpoint = false;
+        // this.enableXSetpoint = true;
+        // this.enableYSetpoint = false;
         this.xSetpoint = hSetpoint;
     }
 
     public void setVSetpoint(double vSetpoint) {
-        this.enableYSetpoint = true;
-        this.enableXSetpoint = false;
+        // this.enableYSetpoint = true;
+        // this.enableXSetpoint = false;
         this.ySetpoint = vSetpoint;
     }
 

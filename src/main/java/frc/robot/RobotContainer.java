@@ -73,6 +73,22 @@ public class RobotContainer {
                                 () -> operatorJoy.getRawButton(1) //
                 ));
 
+                new JoystickButton(operatorJoy, 3).whenHeld(new ShootCmd( //
+                                DriverConstants.kHoodAngle3, //
+                                DriverConstants.kShooterRPM3, //
+                                DriverConstants.kLimeightX1, //
+                                DriverConstants.kLimeightY1, //
+                                DriverConstants.kEnableLimeightX, //
+                                false, //
+                                () -> operatorJoy.getRawButton(1) //
+                ));
+
+                new JoystickButton(operatorJoy, 4).whenHeld(new ShootCmd( //
+                                DriverConstants.kLimeightX1, //
+                                DriverConstants.kEnableLimeightX, //
+                                () -> operatorJoy.getRawButton(1) //
+                ));
+
                 // new JoystickButton(joy2, 3).whenHeld(new
                 // HoodSetPosition(DriverConstants.kHoodAngle1));
                 // new JoystickButton(joy2, 4).whenHeld(new

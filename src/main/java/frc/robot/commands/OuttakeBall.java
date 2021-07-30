@@ -9,12 +9,14 @@ import frc.robot.Constants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class OuttakeBall extends CommandBase {
     private final Feeder feeder = Feeder.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Hood hood = Hood.getInstance();
+    private final Limelight limelight = Limelight.getInstance();
 
     private Supplier<Boolean> confirmationButton;
     private int state;
@@ -52,6 +54,9 @@ public class OuttakeBall extends CommandBase {
     }
 
     private void prepareBalls() {
+        if (!delayReady())
+            return;
+
         feeder.setMotor(FeederConstants.kMotorIntakePower);
         if (feeder.getBallExitSensor()) {
             feeder.stop();
@@ -61,7 +66,7 @@ public class OuttakeBall extends CommandBase {
 
     private void waitForSystemReady() {
         feeder.stop();
-        if (hood.onTarget() && shooter.onTarget() && delayReady() && confirmationButton.get()) {
+        if (hood.onTarget() && shooter.onTarget() && limelight.onTarget() && confirmationButton.get()) {
             setpoint = feeder.getEncoderPosition() + FeederConstants.kRotationsPerBall;
             state = 2;
         }

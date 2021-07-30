@@ -1,14 +1,20 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hood;
 
 public class HoodSetPosition extends CommandBase {
     private final Hood hood = Hood.getInstance();
 
-    private double setpoint;
+    private Supplier<Double> setpoint;
 
     public HoodSetPosition(double setpoint) {
+        this(() -> setpoint);
+    }
+
+    public HoodSetPosition(Supplier<Double> setpoint) {
         addRequirements(hood);
         this.setpoint = setpoint;
     }
@@ -20,7 +26,7 @@ public class HoodSetPosition extends CommandBase {
 
     @Override
     public void execute() {
-        hood.setPosition(setpoint);
+        hood.setPosition(setpoint.get());
         // hood.stop();
     }
 

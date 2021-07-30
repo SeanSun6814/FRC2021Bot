@@ -12,16 +12,16 @@ public class SwerveAim extends CommandBase {
     private final Limelight limelight = Limelight.getInstance();
     private final SwerveTeleDrive swerveTeleDrive;
     private final MyPIDController xController, yController;
-    // private boolean enableXSetpoint, enableYSetpoint;
-    // private double xSetpoint, ySetpoint;
+    private boolean enableXSetpoint, enableYSetpoint;
+    private double xSetpoint, ySetpoint;
     private final double normalizePanSpdDriverToFull, normalizeRotSpdDriverToFull;
 
     public SwerveAim(double xSetpoint, double ySetpoint, boolean enableXSetpoint, boolean enableYSetpoint) {
         addRequirements(swerveDrivetrain);
-        // this.xSetpoint = xSetpoint;
-        // this.ySetpoint = ySetpoint;
-        // this.enableXSetpoint = true;
-        // this.enableYSetpoint = true;
+        this.xSetpoint = xSetpoint;
+        this.ySetpoint = ySetpoint;
+        this.enableXSetpoint = enableXSetpoint;
+        this.enableYSetpoint = enableYSetpoint;
 
         // Because this command drives the swerve through the tele-drive command,
         // the output gets automatically mapped to the slower "user max speed" settings.
@@ -81,6 +81,10 @@ public class SwerveAim extends CommandBase {
     public void initialize() {
         System.out.println(getName() + " command started.");
         swerveDrivetrain.stopModules();
+        limelight.setLED(true);
+        limelight.setEnableXSetpoint(enableXSetpoint);
+        limelight.setEnableYSetpoint(enableYSetpoint);
+        limelight.setSetpoint(xSetpoint, ySetpoint);
         swerveTeleDrive.initialize();
         // Calling initialize doesn't activates tele-drive's required subsystems, but
         // that's okay because SwerveAim requires it instead.
@@ -96,6 +100,7 @@ public class SwerveAim extends CommandBase {
         swerveTeleDrive.end(interrupted);
         swerveDrivetrain.stopModules();
         System.out.println(getName() + " command ended, interrupted=[" + interrupted + "].");
+        limelight.setLED(false);
     }
 
     @Override
