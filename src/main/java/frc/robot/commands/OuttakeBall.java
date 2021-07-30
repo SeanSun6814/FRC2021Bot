@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -17,6 +18,7 @@ public class OuttakeBall extends CommandBase {
     private final Shooter shooter = Shooter.getInstance();
     private final Hood hood = Hood.getInstance();
     private final Limelight limelight = Limelight.getInstance();
+    private final LED led = LED.getInstance();
 
     private Supplier<Boolean> confirmationButton;
     private int state;
@@ -32,6 +34,9 @@ public class OuttakeBall extends CommandBase {
     @Override
     public void initialize() {
         state = 0;
+
+        led.setRed();
+        led.setFlashing(false);
         System.out.println(getName() + " starting...");
     }
 
@@ -69,6 +74,8 @@ public class OuttakeBall extends CommandBase {
         if (hood.onTarget() && shooter.onTarget() && limelight.onTarget() && confirmationButton.get()) {
             setpoint = feeder.getEncoderPosition() + FeederConstants.kRotationsPerBall;
             state = 2;
+            led.setBlue();
+            led.setFlashing(false);
         }
     }
 
@@ -78,6 +85,8 @@ public class OuttakeBall extends CommandBase {
             // feeder.setBallCount(feeder.getBallCount() - 1);
             delayStartTimestamp = Timer.getFPGATimestamp();
             state = 0;
+            led.setRed();
+            led.setFlashing(false);
         }
     }
 

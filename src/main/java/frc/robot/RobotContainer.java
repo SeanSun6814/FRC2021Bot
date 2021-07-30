@@ -18,6 +18,7 @@ import frc.robot.commands.SwerveFollowTrajectory;
 import frc.robot.commands.SwerveTeleDrive;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
@@ -30,6 +31,7 @@ public class RobotContainer {
 
         private final SwerveDrivetrain swerveDrivetrain = SwerveDrivetrain.getInstance();
         private final Limelight limelight = Limelight.getInstance();
+        public final LED led = LED.getInstance();
 
         private Shooter shooter = Shooter.getInstance();
         private Hood hood = Hood.getInstance();

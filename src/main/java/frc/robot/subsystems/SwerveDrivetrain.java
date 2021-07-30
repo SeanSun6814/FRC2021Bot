@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.Units;
-import frc.robot.swerve.SwerveModule;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -15,6 +12,9 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.Units;
+import frc.robot.swerve.SwerveModule;
 
 @SuppressWarnings("PMD.ExcessiveImports")
 public class SwerveDrivetrain extends SubsystemBase {

@@ -17,10 +17,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        robotContainer.led.periodic();
     }
 
     @Override
     public void disabledInit() {
+        robotContainer.led.setYellow();
+        robotContainer.led.setFlashing(true);
     }
 
     @Override
@@ -29,6 +32,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        robotContainer.led.setGreen();
+        robotContainer.led.setFlashing(false);
+
         m_autonomousCommand = robotContainer.getAutonomousCommand();
 
         if (m_autonomousCommand != null)
@@ -41,6 +47,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        robotContainer.led.setGreen();
+        robotContainer.led.setFlashing(true);
+
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
