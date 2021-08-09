@@ -104,7 +104,7 @@ public class Limelight extends SubsystemBase {
             ledMode.setNumber(3);
         else
             ledMode.setNumber(3);
-            // ledMode.setNumber(1);
+        // ledMode.setNumber(1);
     }
 
     public boolean isEnableXSetpoint() {
@@ -158,7 +158,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean onTarget() {
-        if (!isValid())
+        if (!isValid() && (enableYSetpoint || enableXSetpoint))
             return false;
 
         if (enableYSetpoint) {

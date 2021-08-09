@@ -153,8 +153,8 @@ public final class Constants {
         public static final double kShooterRPM1 = 2050;
         public static final double kShooterRPM2 = 1350;
         public static final double kShooterRPM3 = 1200;
-        public static final double kShooterRPM4 = 5000;
-        public static final double kShooterRPM5 = 6000;
+        public static final double kShooterRPM4 = 3000;
+        public static final double kShooterRPM5 = 3500;
         public static final double kLimeightX1 = 0;
         public static final double kLimeightY1 = -3;
         public static final boolean kEnableLimeightX = true;
